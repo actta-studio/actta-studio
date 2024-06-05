@@ -26,8 +26,6 @@ app.set("view engine", "pug");
 app.use((req, res, next) => {
   const ua = UAParser(req.headers["user-agent"]);
 
-  console.log("ua", ua.device.type);
-
   res.locals.isDesktop = ua.device.type === undefined;
   res.locals.isTablet = ua.device.type === "tablet";
   res.locals.isPhone = ua.device.type === "mobile";
@@ -38,8 +36,6 @@ app.use((req, res, next) => {
 });
 
 app.use(favicon("public/meta/favicon.ico"));
-
-console.log("process.env.NODE_ENV", process.env.NODE_ENV);
 
 if (process.env.NODE_ENV === "development") {
   app.use(errorHandler());
