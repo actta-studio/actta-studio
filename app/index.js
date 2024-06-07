@@ -6,18 +6,24 @@ import gsap from "gsap";
 
 import Home from "@/pages/home";
 import NotFound from "@/pages/notFound";
+
 import Preloader from "@/components/preloader";
+import Grid from "@/components/grid";
+import Squares from "@/components/squares";
+import Logo from "@/components/logo";
 
 class App {
   constructor() {
-    console.log("App has been initialized!");
-
     this.createContent();
 
-    this.initLenis();
     this.createPreloader();
     this.createPages();
-    // design grid
+    this.createSquares();
+    // this.initLogoAnimation();
+
+    if (process.env.NODE_ENV === "development") {
+      this.createGrid();
+    }
 
     this.addLinkListeners();
     this.addEventListeners();
@@ -26,13 +32,11 @@ class App {
   createPages() {
     this.pages = new Map();
 
-    this.pages.set("home", new Home({ lenis: this.lenis }));
-    // this.pages.set("home", new Home({ lenis: this.lenis }));
-    this.pages.set("404", new NotFound({ lenis: this.lenis }));
+    this.pages.set("home", new Home());
+    this.pages.set("404", new NotFound());
 
     this.page = this.pages.get(this.template);
 
-    console.log("this.page - ", this.page);
     this.page.create({ sourcePreloader: true });
     // this.page.show();
   }
@@ -47,44 +51,30 @@ class App {
     this.preloader.once("completed", this.onPreloaded.bind(this));
   }
 
+  createGrid() {
+    this.grid = new Grid(12);
+  }
+
+  createSquares() {
+    this.squares = new Squares();
+  }
+
   onPreloaded() {
     window.scrollTo(0, 0);
-    console.log("Preloaded!");
     this.preloader.destroy();
     this.page.show();
   }
 
-  initLenis() {
-    window.scrollTo(0, 0);
-    this.lenis = new Lenis({
-      easing: (x) => {
-        return -(Math.cos(Math.PI * x) - 1) / 2;
-      },
-    });
-
-    this.raf = this.raf.bind(this);
-    requestAnimationFrame(this.raf);
-
-    this.lenis.stop();
-  }
-
-  suspendScroll() {
-    this.lenis.stop();
-  }
-
-  resumeScroll() {
-    this.lenis.start();
-  }
-
-  raf(time) {
-    this.lenis.raf(time);
-    requestAnimationFrame(this.raf);
+  initLogoAnimation() {
+    this.logo = new Logo();
+    // this.logo.on("bounce", (value) => {
+    //   console.log(value);
+    //   this.squares.onBounce(value);
+    // });
   }
 
   async onChange({ url, push = true }) {
     if (url === window.location.href) return;
-
-    console.log("onChange", url);
 
     if (url.includes("/shop") && window.location.href.includes("/shop")) {
       await this.pages.get("shop").animateOutProducts();
@@ -116,7 +106,6 @@ class App {
     this.page = this.pages.get(this.template);
 
     if (!this.page) {
-      console.log(`page ${this.template} not found!`);
       this.page = this.pages.get("404");
     }
 
