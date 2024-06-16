@@ -31,14 +31,14 @@ export default class Home extends Page {
       this.animateIn
         .from(this.elements.get("about"), {
           autoAlpha: 0,
-          // yPercent: 100,
+          yPercent: 100,
           stagger: 0.075,
         })
         .from(
           this.elements.get("services"),
           {
             autoAlpha: 0,
-            // yPercent: 100,
+            yPercent: 100,
             stagger: 0.075,
           },
           "<"
@@ -61,14 +61,14 @@ export default class Home extends Page {
       this.animateOut
         .to(this.elements.get("about"), {
           autoAlpha: 0,
-          // yPercent: -100,
+          yPercent: -100,
           stagger: 0.075,
         })
         .to(
           this.elements.get("services"),
           {
             autoAlpha: 0,
-            // yPercent: -100,
+            yPercent: -100,
             stagger: 0.075,
           },
           "<"
