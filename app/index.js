@@ -1,8 +1,6 @@
 import "../styles/main.scss";
 
 import each from "lodash/each";
-import Lenis from "@studio-freight/lenis";
-import gsap from "gsap";
 
 import Home from "@/pages/home";
 import NotFound from "@/pages/notFound";
@@ -11,19 +9,18 @@ import Preloader from "@/components/preloader";
 import Grid from "@/components/grid";
 import Squares from "@/components/squares";
 import Logo from "@/components/logo";
+import LanguageToggle from "./components/LanguageToggle";
+import Navigation from "./components/Navigation";
 
 class App {
   constructor() {
     this.createContent();
 
-    this.createPreloader();
+    this.createNavigation();
     this.createPages();
-    this.createSquares();
-    // this.initLogoAnimation();
+    this.createLanguageToggle();
 
-    if (process.env.NODE_ENV === "development") {
-      this.createGrid();
-    }
+    this.createGrid();
 
     this.addLinkListeners();
     this.addEventListeners();
@@ -37,8 +34,9 @@ class App {
 
     this.page = this.pages.get(this.template);
 
-    this.page.create({ sourcePreloader: true });
-    // this.page.show();
+    this.page.create({ sourcePreloader: false });
+    this.page.show();
+    this.navigation.show();
   }
 
   createContent() {
@@ -51,26 +49,24 @@ class App {
     this.preloader.once("completed", this.onPreloaded.bind(this));
   }
 
+  createLanguageToggle() {
+    this.toggle = new LanguageToggle();
+  }
+
+  createNavigation() {
+    this.navigation = new Navigation();
+  }
+
   createGrid() {
-    this.grid = new Grid(12);
+    this.grid = new Grid();
   }
 
   createSquares() {
     this.squares = new Squares();
   }
 
-  onPreloaded() {
-    window.scrollTo(0, 0);
-    this.preloader.destroy();
-    this.page.show();
-  }
-
   initLogoAnimation() {
     this.logo = new Logo();
-    // this.logo.on("bounce", (value) => {
-    //   console.log(value);
-    //   this.squares.onBounce(value);
-    // });
   }
 
   async onChange({ url, push = true }) {
@@ -82,7 +78,7 @@ class App {
 
     window.scrollTo(0, 0);
 
-    this.page.hide();
+    await this.page.hide();
 
     const request = await window.fetch(url);
 
@@ -102,6 +98,27 @@ class App {
     );
 
     this.content.innerHTML = divContent.innerHTML;
+
+    const newLanguageToggle = div.querySelector(".link--language");
+    const newTitle = div.querySelector(".header--navigation .title");
+    const currentLanguageToggle = document.querySelector(".link--language");
+    const currentTitle = document.querySelector(".header--navigation .title");
+
+    if (currentLanguageToggle && newLanguageToggle) {
+      this.toggle.hide();
+
+      currentLanguageToggle.parentNode.replaceChild(
+        newLanguageToggle,
+        currentLanguageToggle
+      );
+
+      this.toggle.show();
+    }
+
+    if (currentTitle && newTitle) {
+      newTitle.classList.add("title--animated");
+      currentTitle.parentNode.replaceChild(newTitle, currentTitle);
+    }
 
     this.page = this.pages.get(this.template);
 

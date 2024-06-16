@@ -3,19 +3,16 @@ import { map } from "lodash";
 import Page from "../../classes/Page";
 
 export default class NotFound extends Page {
-  constructor({ lenis }) {
+  constructor() {
     super({
       id: "notFound",
       element: ".page--notFound",
       elements: {},
     });
-
-    this.lenis = lenis;
   }
 
   show() {
     super.show();
-    this.lenis.start();
   }
 
   create({ sourcePreloader }) {

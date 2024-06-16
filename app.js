@@ -13,7 +13,7 @@ const favicon = require("serve-favicon");
 
 const prismic = require("@prismicio/client");
 
-const { siteConfig } = require("./config/index");
+const { siteConfig, langString } = require("./config/index");
 
 const port = 3000;
 const UAParser = require("ua-parser-js");
@@ -32,6 +32,8 @@ app.use((req, res, next) => {
 
   res.locals.Prismic = prismic;
   res.locals.Link = siteConfig.handleLinkResolver;
+  res.locals.LangString = langString;
+
   next();
 });
 

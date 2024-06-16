@@ -14,8 +14,6 @@ export default class Page {
   }
 
   create() {
-    console.log(`${this.id} page - called create!`);
-
     this.element = document.querySelector(this.selector);
     this.elements = new Map();
 
@@ -44,9 +42,9 @@ export default class Page {
       this.animateIn = gsap.timeline();
       this.animateIn.to(this.element, {
         autoAlpha: 1,
+        duration: 0.3,
       });
       this.animateIn.call(() => {
-        console.log(`${this.id} page - called show!`);
         resolve();
       });
     });
@@ -57,10 +55,9 @@ export default class Page {
       this.animateOut = gsap.timeline();
       this.animateOut.to(this.element, {
         autoAlpha: 0,
+        duration: 0.3,
       });
       this.animateOut.call(() => {
-        console.log(`${this.id} page - called hide!`);
-
         // this.destroy();
         resolve();
       });
@@ -72,7 +69,7 @@ export default class Page {
   removeEventListeners() {}
 
   destroy() {
-    console.log(`${this.id} page has been destroyed!`);
+    `${this.id} page has been destroyed!`;
     this.removeEventListeners();
   }
 }

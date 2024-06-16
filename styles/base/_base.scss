@@ -17,10 +17,12 @@ body {
   overscroll-behavior-y: none;
   padding: 0;
   margin: 0;
-  background-color: $color-white;
-  color: $color-grey;
+  background-color: $color-black;
+  color: $color-white;
   font-family: "Satoshi", sans-serif;
   font-weight: 500;
+  text-transform: uppercase;
+  line-height: 1.22;
 }
 
 @supports (-webkit-font-smoothing: antialiased) or
@@ -57,18 +59,20 @@ a {
   color: inherit;
 }
 
-// p::selection,
-// span::selection,
-// h1::selection,
-// h2::selection,
-// h3::selection,
-// h4::selection,
-// h5::selection,
-// h6::selection,
-// a::selection,
-// label::selection,
-// img::selection {
-// }
+p::selection,
+span::selection,
+h1::selection,
+h2::selection,
+h3::selection,
+h4::selection,
+h5::selection,
+h6::selection,
+a::selection,
+label::selection,
+img::selection {
+  color: $color-white;
+  background-color: $color-green;
+}
 
 html.lenis,
 html.lenis body {

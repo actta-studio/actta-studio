@@ -1,8 +1,166 @@
 .page--home {
-  background-color: $color-white;
-  color: $color-grey;
+  position: relative;
+  background-color: transparent;
+  padding: var(--layout-margin);
 
-  h1 {
-    font-size: 1.75rem;
+  justify-content: initial;
+  align-items: initial;
+
+  display: grid;
+  grid-template-columns: repeat(12, 1fr);
+  column-gap: 2rem;
+  row-gap: 17.3rem;
+  align-items: start;
+  grid-template-areas:
+    ". . . about about about about services services . . ."
+    "logo logo logo logo logo logo logo logo logo logo logo logo";
+
+  @include media("<=tablet") {
+    //  reset to flex
+    display: flex;
+    flex-direction: column;
+    gap: 10.4rem;
+    margin-top: 17.1rem;
+  }
+
+  @include media("<=phone") {
+    margin-top: 16.3rem;
+    margin-bottom: 1rem;
+    // margin-top: calc(16.3rem - var(--layout-margin));
+    // reset to flex
+  }
+}
+
+.page--home .about {
+  position: relative;
+  grid-area: about;
+  z-index: z("top");
+}
+
+.page--home .about .wrapper {
+  display: block;
+  font-size: 1.6rem;
+  text-transform: uppercase;
+  overflow: hidden;
+
+  @include media("<=tablet") {
+    font-size: 1.6rem;
+  }
+
+  @include media("<=phone") {
+    // todo: fix after polly validates the translations
+    font-size: 1.2rem;
+  }
+}
+
+.page--home .about .wrapper .text {
+  display: block;
+  visibility: hidden;
+}
+
+.page--home .about .space {
+  margin: 3.1rem 0;
+  display: block;
+}
+
+.page--home .services {
+  grid-area: services;
+  position: relative;
+
+  display: flex;
+  flex-direction: column;
+  gap: 3.1rem;
+  z-index: z("top");
+
+  @include media("<=tablet") {
+    width: 100%;
+  }
+}
+
+.page--home .services ul {
+  @include media("<=phone") {
+    column-gap: 8.4rem;
+  }
+}
+
+.page--home .service-title {
+  position: relative;
+  font-size: 1.6rem;
+  display: block;
+  overflow: hidden;
+
+  @include media("<=tablet") {
+    font-weight: 700;
+  }
+
+  @include media("<=tablet") {
+    font-size: 1.6rem;
+  }
+
+  @include media("<=phone") {
+    font-size: 1.4rem;
+  }
+}
+
+.page--home .service-title span {
+  display: block;
+  visibility: hidden;
+}
+
+.page--home .services .service {
+  font-size: 1.6rem;
+  text-transform: uppercase;
+
+  display: flex;
+  align-items: flex-end;
+  overflow: hidden;
+
+  @include media("<=tablet") {
+    gap: 2.1rem;
+    font-size: 1.6rem;
+  }
+
+  @include media("<=phone") {
+    gap: 1.14rem;
+    font-size: 1.4rem;
+  }
+}
+
+.page--home .services .service span {
+  display: block;
+  visibility: hidden;
+}
+
+.page--home .services .service svg {
+  display: none;
+
+  @include media("<=tablet") {
+    display: block;
+    width: 2rem;
+  }
+
+  @include media("<=phone") {
+    width: 1.6rem;
+  }
+}
+
+.page--home .logo {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  grid-area: logo;
+}
+
+.page--home .logo img {
+  width: 70rem;
+  height: auto;
+  object-fit: cover;
+
+  @include media("<=tablet") {
+    width: 37.2rem;
+  }
+
+  @include media("<=phone") {
+    width: 34rem;
   }
 }

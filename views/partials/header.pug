@@ -1,7 +1,14 @@
-header(id="header")
-	nav(class="header--navigation")
-		ul 
-			li 
-				a(href="/") Home
-			li
-				a(href="/broken-link") Broken Link
+if navigation
+	header(id="header")
+		nav(class="header--navigation")
+			a(href=Link(document) class="title" title="Home" aria-label="Home" role="link" tabindex="0")
+				span ACTTA STUDIO
+			ul.links
+				li.link
+					a(href="/en") IG
+					a(href="/en") EMAIL
+				li(class="link link--language")
+					a(href=Link(navigation.alternate_languages[0]))
+						span(class="wrap")
+							span=LangString(navigation.alternate_languages[0].lang)
+					

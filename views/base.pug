@@ -47,17 +47,17 @@ html(lang=`en` class=`${isDesktop ? 'desktop' : isTablet ? 'tablet' : 'phone'}`)
 
 			
 	body
-		include ./partials/preloader
+		//- include ./partials/preloader
+		//- include ./partials/squares
 		header(class="navigation") 
 			include ./partials/header
 		
-		.page-transition
-		.design-grid 
+		//- img(id="logo" data-src="/images/logo.svg", alt="ACTTA Studio Logo")
 
 		main.content#content(data-template=template)
 			block content
 
-		include ./partials/footer
+		//- include ./partials/footer
 		
 		script(src="main.js")
 

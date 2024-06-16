@@ -1,3 +1,29 @@
-.design__grid {
+.design-grid {
+  --gutter: 2rem;
+  --margin: 3rem;
+
+  position: fixed;
+  top: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  width: calc(100vw - (var(--margin) * 2));
+  height: 100dvh;
+
+  display: none;
+  flex-direction: row;
+  gap: var(--gutter);
+
+  pointer-events: none;
+
   z-index: z("dev");
+}
+
+.design-grid--visible {
+  display: flex;
+}
+
+.design-grid .column {
+  flex: 1;
+  background-color: $color-green;
+  opacity: 0.1;
 }

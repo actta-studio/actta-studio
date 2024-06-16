@@ -7,15 +7,47 @@ const { siteConfig } = require("../config/index");
 const router = require("express").Router();
 
 const handleDefaultRequests = async (lang) => {
-  return {};
+  lang = siteConfig.supportedLanguages.includes(lang)
+    ? lang + "-ca"
+    : siteConfig.defaultLanguage + "-ca";
+
+  const navigation = await client
+    .getSingle("navigation", { lang })
+    .catch((err) => {
+      if (
+        !(err instanceof PrismicError) ||
+        err.message !== "No documents were returned"
+      ) {
+        console.log(err);
+      }
+      return null;
+    });
+
+  return {
+    navigation,
+  };
 };
 
-const checkLanguage = (req, res, next) => {
+const parseLang = (lang) => {
+  switch (lang) {
+    case "en" || "en-ca":
+      return "en-ca";
+    case "fr" || "fr-ca":
+      return "fr-ca";
+    default:
+      return lang;
+  }
+};
+
+const checkLanguage = async (req, res, next) => {
   const lang = req.params.lang;
+
+  const defaults = await handleDefaultRequests(lang);
+
   if (!siteConfig.supportedLanguages.includes(lang)) {
     return res
       .status(404)
-      .render("pages/404", { lang: siteConfig.defaultLanguage });
+      .render("pages/404", { lang: siteConfig.defaultLanguage, ...defaults });
   }
   next();
 };
@@ -29,7 +61,9 @@ router.get(
   checkLanguage,
   asyncHandler(async (req, res) => {
     const lang = req.params.lang;
-    res.status(404).render("pages/404", { lang });
+
+    const defaults = await handleDefaultRequests(lang);
+    res.status(404).render("pages/404", { lang, ...defaults });
   })
 );
 
@@ -39,62 +73,42 @@ router.get(
   asyncHandler(async (req, res, next) => {
     const lang = req.params.lang;
 
-    res.render("pages/home", { lang });
+    if (!lang) {
+      return next(new Error("Language parameter is missing"));
+    }
+
+    const defaults = await handleDefaultRequests(lang);
+
+    const document = await client
+      .getSingle("homepage", {
+        lang: parseLang(lang) || "",
+      })
+      .catch((err) => {
+        if (
+          !(err instanceof PrismicError) ||
+          err.message !== "No documents were returned"
+        ) {
+          console.log(err);
+        }
+        return null;
+      });
+
+    console.log("homepage :=>", document);
+
+    if (!document) {
+      res.status(404).render("pages/404", { lang, ...defaults });
+    } else {
+      res.render("pages/home", { lang, ...defaults, document });
+    }
   })
 );
 
-// router.get(
-//   "/:lang",
-//   asyncHandler(async (req, res, next) => {
-//     const lang = req.params.lang;
-
-//     console.error("lang", lang);
-
-//     // if (!lang) {
-//     //   return next(new Error("Language parameter is missing"));
-//     // }
-
-//     // const defaults = await handleDefaultRequests(lang);
-
-//     // if (!siteConfig.supportedLanguages.includes(lang)) {
-//     //   res.status(404).render("pages/404", { ...defaults, lang: lang });
-//     // }
-
-//     // const document = await client
-//     //   .getSingle("home", {
-//     //     fetchLinks: [
-//     //       "product.image",
-//     //       "product_showcase.product",
-//     //       "product.title",
-//     //       "collection.collection_title",
-//     //       "article.label",
-//     //       "article.featured_image",
-//     //     ],
-//     //     lang: lang || "",
-//     //   })
-//     //   .catch((err) => {
-//     //     if (
-//     //       !(err instanceof PrismicError) ||
-//     //       err.message !== "No documents were returned"
-//     //     ) {
-//     //       console.log(err);
-//     //     }
-//     //     return null;
-//     //   });
-
-//     // if (!document) {
-//     //   res.status(404).render("pages/404", { ...defaults, lang: lang });
-//     // } else {
-//     //   res.render("pages/home", { ...defaults, document });
-//     // }
-
-//     res.render("pages/home");
-//   })
-// );
-
 router.get("*", (req, res) => {
-  console.log("wildcard");
-  res.status(404).render("pages/404");
+  const defaults = handleDefaultRequests(siteConfig.defaultLanguage);
+  res.status(404).render("pages/404", {
+    lang: siteConfig.defaultLanguage,
+    ...defaults,
+  });
 });
 
 module.exports = router;

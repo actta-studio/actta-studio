@@ -11,10 +11,10 @@ const routes = [
     type: "homepage",
     path: "/",
   },
-  {
-    type: "page",
-    path: "/:uid",
-  },
+  // {
+  //   type: "page",
+  //   path: "/:uid",
+  // },
 ];
 
 module.exports.client = prismic.createClient(repoName, {
@@ -23,10 +23,21 @@ module.exports.client = prismic.createClient(repoName, {
   routes,
 });
 
+module.exports.langString = (lang) => {
+  switch (lang) {
+    case "en-ca":
+      return "en";
+    case "fr-ca":
+      return "fr";
+    default:
+      return lang;
+  }
+};
+
 module.exports.siteConfig = {
   defaultLanguage: "en",
   supportedLanguages: ["en", "fr"],
   handleLinkResolver: (doc) => {
-    return `/${doc.lang}/`;
+    return `/${doc.lang.match(/^[^-]*/)[0]}`;
   },
 };

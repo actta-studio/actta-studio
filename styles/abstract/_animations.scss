@@ -1,0 +1,11 @@
+@keyframes tiltLeft {
+  to {
+    transform: rotate(-20deg);
+  }
+}
+
+@keyframes tiltRight {
+  to {
+    transform: rotate(20deg);
+  }
+}

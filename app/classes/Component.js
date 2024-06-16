@@ -54,6 +54,5 @@ export default class Component extends EventEmitter {
 
   destroy() {
     this.removeEventListeners();
-    console.log(`The component ${this.id} has been destroyed!`);
   }
 }

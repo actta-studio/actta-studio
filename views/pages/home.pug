@@ -5,6 +5,37 @@ block variables
 
 block content
 	div(class="page page--home")
-		h1 ACTTA - PUG + PRISMIC + VITE
+		- var lines = document.data.about.split('\n')
+		div.about
+			p
+				each line in lines
+					if line === ''
+						span.space
+						span.space
+					else
+						span.wrapper
+							span(data-transition="translate").text!=line
+			
+
+		.services
+			h2.service-title
+				span(data-transition="translate")
+					if document.lang === 'en-ca'
+						| Our services
+					else
+						| Nos services
+			ul
+				each service in document.data.services
+					li.service
+						span 
+							svg(viewbox='0 0 23 29' fill='none' xmlns='http://www.w3.org/2000/svg')
+								path(d='M1 0V19.0953H21M21 19.0953L14.9286 10.1906M21 19.0953L14.9286 28' stroke='#F5F5F5' stroke-width='2')
+						span(data-transition="translate")!=service.service
+
+		.logo
+			img(src="/images/logo.svg", alt="ACTTA Studio")
+
+
+
 
 
