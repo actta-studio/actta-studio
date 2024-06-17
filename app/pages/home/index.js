@@ -1,5 +1,7 @@
 import gsap from "gsap";
 import CustomEase from "gsap/CustomEase";
+import { splitC } from "@/utils/text";
+import { each } from "lodash";
 
 import Page from "../../classes/Page";
 
@@ -13,8 +15,9 @@ export default class Home extends Page {
       id: "home",
       element: ".page--home",
       elements: {
+        lines: "[data-animation='type']",
         about: ".page--home .about .text",
-        services: ".page--home .services span",
+        services: ".page--home .services .line",
         logo: ".page--home .logo",
       },
     });
@@ -22,68 +25,75 @@ export default class Home extends Page {
 
   show() {
     return new Promise((resolve) => {
-      this.animateIn = gsap.timeline({
-        defaults: {
-          ease: "power3.inOut",
-        },
-      });
+      let animationsCompleted = 0;
+      const lines = this.elements.get("lines");
 
-      this.animateIn
-        .from(this.elements.get("about"), {
-          autoAlpha: 0,
-          yPercent: 100,
-          stagger: 0.075,
-        })
-        .from(
-          this.elements.get("services"),
-          {
-            autoAlpha: 0,
-            yPercent: 100,
-            stagger: 0.075,
-          },
-          "<"
-        );
-
-      this.animateIn.call(() => {
+      if (lines.length === 0) {
         resolve();
+        return;
+      }
+
+      each(this.elements.get("lines"), (element) => {
+        const characters = Array.from(element.querySelectorAll(".c"));
+        animationsCompleted += characters.length;
+
+        gsap.to(characters, {
+          "--scale": 0,
+          ease: "steps(1)",
+          stagger: {
+            each: 0.05 / 2,
+            from: "start",
+          },
+          onComplete: () => {
+            animationsCompleted -= 1;
+            if (animationsCompleted === 0) {
+              resolve();
+            }
+          },
+        });
       });
     });
   }
 
   hide() {
-    return new Promise((resolve) => {
-      this.animateOut = gsap.timeline({
-        defaults: {
-          ease: "power3.inOut",
-        },
-      });
-
-      this.animateOut
-        .to(this.elements.get("about"), {
-          autoAlpha: 0,
-          yPercent: -100,
-          stagger: 0.075,
-        })
-        .to(
-          this.elements.get("services"),
-          {
-            autoAlpha: 0,
-            yPercent: -100,
-            stagger: 0.075,
-          },
-          "<"
-        );
-
-      this.animateOut.call(() => {
-        resolve();
-      });
-    });
+    // return new Promise((resolve) => {
+    //   let animationsCompleted = 0;
+    //   const lines = this.elements.get("lines");
+    //   if (lines.length === 0) {
+    //     resolve();
+    //     return;
+    //   }
+    //   each(this.elements.get("lines"), (element) => {
+    //     const characters = Array.from(element.querySelectorAll(".c"));
+    //     animationsCompleted += characters.length;
+    //     gsap.to(characters, {
+    //       "--scale": 1,
+    //       ease: "steps(1)",
+    //       stagger: {
+    //         each: 0.05 / 2,
+    //         from: "start",
+    //       },
+    //       onComplete: () => {
+    //         animationsCompleted -= 1;
+    //         if (animationsCompleted === 0) {
+    //           resolve();
+    //         }
+    //       },
+    //     });
+    //   });
+    // });
   }
 
   create({ sourcePreloader }) {
     this.sourcePreloader = sourcePreloader;
     super.create();
     this.addEventListeners();
+
+    each(this.elements.get("lines"), (element) => {
+      splitC({
+        element: element,
+      });
+    });
   }
 
   createAnimations() {}

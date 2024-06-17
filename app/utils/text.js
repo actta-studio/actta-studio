@@ -48,6 +48,23 @@ export function split({ element, expression = " ", append = true }) {
   return spans;
 }
 
+export function splitC({ element }) {
+  const text = element.innerHTML.toString().trim();
+  let innerHTML = "";
+
+  each(text, (char) => {
+    if (char === " ") {
+      innerHTML += "<span>&nbsp;</span>";
+    } else {
+      innerHTML += `<span class="c">${char}</span>`;
+    }
+  });
+
+  element.innerHTML = innerHTML;
+
+  return element.querySelectorAll("span");
+}
+
 export function calculate(spans) {
   if (!spans.length) {
     return;
