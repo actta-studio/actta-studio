@@ -29,14 +29,11 @@ export default class Home extends Page {
         document.querySelectorAll("[data-animation='type']")
       );
 
-      console.log("lines");
-
       if (lines.length === 0) {
         resolve();
         return;
       }
 
-      const totalAnimationDuration = 0.3;
       const masterTimeline = gsap.timeline({
         onComplete: () => {
           console.log("All lines animation completed");
@@ -50,6 +47,13 @@ export default class Home extends Page {
       lines.forEach((element, lineIndex) => {
         const characters = Array.from(element.querySelectorAll(".c"));
         const lineTimeline = gsap.timeline();
+
+        const minDuration = 0.2;
+        const maxDuration = 0.4;
+        const totalAnimationDuration = Math.max(
+          minDuration,
+          Math.min(maxDuration, characters.length * 0.025)
+        );
         const delayIncrement = totalAnimationDuration / characters.length;
 
         gsap.set(characters, {
@@ -68,14 +72,12 @@ export default class Home extends Page {
           );
         });
 
-        // Add the line timeline to the master timeline, ensuring it starts after the previous one completes
         masterTimeline.add(lineTimeline, lineIndex === 0 ? 0 : ">");
       });
     });
   }
 
   hide() {
-    console.log("hide");
     return new Promise((resolve) => {
       const lines = Array.from(
         document.querySelectorAll("[data-animation='type']")
@@ -86,15 +88,19 @@ export default class Home extends Page {
         return;
       }
 
-      const totalAnimationDuration = 1.25;
-
       const animationPromises = lines.map((element) => {
         return new Promise((resolveLine) => {
           const characters = Array.from(
             element.querySelectorAll(".c")
-          ).reverse(); // Reverse the characters array
+          ).reverse();
           let completedAnimations = 0;
 
+          const minDuration = 1.0;
+          const maxDuration = 1.3;
+          const totalAnimationDuration = Math.max(
+            minDuration,
+            Math.min(maxDuration, characters.length * 0.1)
+          );
           const delayIncrement = totalAnimationDuration / characters.length;
 
           gsap.set(characters, {
@@ -103,9 +109,9 @@ export default class Home extends Page {
 
           characters.forEach((character, index) => {
             gsap.to(character, {
-              "--scale": 1, // Change scale to 1 to hide
+              "--scale": 1,
               ease: "steps(1)",
-              delay: index * delayIncrement, // Use the same delay increment
+              delay: index * delayIncrement,
               onComplete: () => {
                 completedAnimations++;
                 if (completedAnimations === characters.length) {
