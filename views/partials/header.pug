@@ -5,8 +5,8 @@ if navigation
 				span ACTTA STUDIO
 			ul.links
 				li.link
-					a(href="/en") IG
-					a(href="/en") EMAIL
+					each item in navigation.data.contact_information
+						a(href=item.link.url target=item.link.target data-link="external")=item.label
 				li(class="link link--language")
 					a(href=Link(navigation.alternate_languages[0]) data-state="disabled")
 						span(class="wrap")

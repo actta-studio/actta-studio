@@ -63,6 +63,7 @@ router.get(
     const lang = req.params.lang;
 
     const defaults = await handleDefaultRequests(lang);
+
     res.status(404).render("pages/404", { lang, ...defaults });
   })
 );
@@ -93,7 +94,7 @@ router.get(
         return null;
       });
 
-    console.log("homepage :=>", document);
+    console.log("homepage :=>", defaults.navigation.data.contact_information);
 
     if (!document) {
       res.status(404).render("pages/404", { lang, ...defaults });
