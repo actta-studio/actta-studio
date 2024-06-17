@@ -34,7 +34,7 @@ export default class Home extends Page {
         return;
       }
 
-      const totalAnimationDuration = 0.7;
+      const totalAnimationDuration = 0.3;
       const masterTimeline = gsap.timeline({
         onComplete: () => {
           console.log("All lines animation completed");
