@@ -10,7 +10,8 @@ block content
 			p
 				each line in lines
 					if line === '&nbsp;'
-						span.break
+						span.wrapper
+							span!='&nbsp;'
 					else if line === ''
 						span.space
 						span.space
