@@ -76,10 +76,19 @@
 .header--navigation .link:first-child {
   display: flex;
   flex-direction: row;
-  gap: 0.75rem;
+  gap: 0.7rem;
 
   @include media("<=phone") {
-    gap: 0.7rem;
+    justify-content: space-between;
+    width: 9.5rem;
+
+    a:first-child {
+      width: 2.5rem;
+    }
+
+    a:last-child {
+      width: 6rem;
+    }
   }
 }
 
@@ -131,6 +140,10 @@
   display: flex;
   align-items: center;
   justify-content: center;
+
+  @include media("<=phone") {
+    width: 2.5rem;
+  }
 }
 
 .header--navigation .link:last-child a {
