@@ -3,6 +3,7 @@
   background-color: transparent;
   padding: var(--layout-margin);
   padding-top: calc(3rem + 0.15rem);
+  min-height: 100dvh;
 
   @include media("<=tablet") {
     padding-top: 2rem;
@@ -27,15 +28,14 @@
   @include media("<=tablet") {
     display: flex;
     flex-direction: column;
-    gap: 9.4rem;
+    gap: 4.4rem;
+    min-height: calc(100dvh - 17.1rem);
     margin-top: 17.1rem;
   }
 
   @include media("<=phone") {
     margin-top: 14.3rem;
-    margin-bottom: 1rem;
-    // margin-top: calc(16.3rem - var(--layout-margin));
-    // reset to flex
+    min-height: calc(100dvh - 14.3rem);
   }
 }
 
@@ -58,6 +58,11 @@
   @include media("<=phone") {
     font-size: 1.5rem;
   }
+}
+
+.page--home .about .wrapper:first-child,
+.page--home .service-title {
+  font-weight: 700;
 }
 
 .page--home .about .wrapper .text {
@@ -199,9 +204,14 @@
   }
 }
 
-.about--fr-ca span,
-.services--fr-ca span {
+.page--home .break {
+  display: inline-block;
+
+  @include media("<=tablet") {
+    height: 1.8rem;
+  }
+
   @include media("<=phone") {
-    font-size: 1.3rem;
+    height: 1.5rem;
   }
 }

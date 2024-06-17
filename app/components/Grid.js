@@ -1,7 +1,7 @@
 export default class Grid {
   constructor() {
     this.sizes = [
-      { condition: "<=430", config: { count: 12, gutter: 10, margin: 10 } },
+      { condition: "<=430", config: { count: 12, gutter: 10, margin: 15 } },
       { condition: "<=768", config: { count: 12, gutter: 10, margin: 20 } },
       { condition: ">768", config: { count: 12, gutter: 20, margin: 40 } },
     ];

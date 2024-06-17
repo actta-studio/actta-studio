@@ -9,12 +9,15 @@ block content
 		div.about(class="about--" + document.lang)
 			p
 				each line in lines
-					if line === ''
+					if line === '&nbsp;'
+						span.break
+					else if line === ''
 						span.space
 						span.space
 					else
 						span.wrapper
 							span(data-animation='type' class="line").text!=line
+					
 			
 
 		.services(class="services--" + document.lang)
