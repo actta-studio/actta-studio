@@ -72,12 +72,6 @@ class App {
   async onChange({ url, push = true }) {
     if (url === window.location.href) return;
 
-    if (url.includes("/shop") && window.location.href.includes("/shop")) {
-      await this.pages.get("shop").animateOutProducts();
-    }
-
-    window.scrollTo(0, 0);
-
     await this.page.hide();
 
     const request = await window.fetch(url);

@@ -3,7 +3,7 @@ import gsap from "gsap";
 import CustomEase from "gsap/CustomEase";
 
 import Component from "@/classes/Component";
-import { split } from "../utils/text";
+import { split, splitC } from "../utils/text";
 
 gsap.registerPlugin(CustomEase);
 
@@ -15,8 +15,17 @@ export default class Navigation extends Component {
       id: "navigation",
       element: ".header--navigation",
       elements: {
+        lines: "[data-animation='type']",
         title: ".header--navigation .title span",
       },
+    });
+  }
+
+  create() {
+    super.create();
+
+    this.lines = splitC({
+      element: this.elements.get("title"),
     });
   }
 
@@ -28,9 +37,13 @@ export default class Navigation extends Component {
         },
       });
 
-      this.animateIn.from(this.elements.get("title"), {
-        autoAlpha: 0,
-        yPercent: 100,
+      this.animateIn.to(".header--navigation .c", {
+        "--scale": 0,
+        ease: "steps(1)",
+        stagger: {
+          each: 0.05 / 2,
+          from: "start",
+        },
       });
 
       this.animateIn.call(() => {

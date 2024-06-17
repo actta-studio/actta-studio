@@ -37,12 +37,16 @@
 }
 
 .header--navigation .title span {
-  display: block;
-  visibility: hidden;
+  // display: block;
+  // visibility: hidden;
 }
 
-.header--navigation .title--animated span {
-  visibility: visible;
+// .header--navigation .title--animated span {
+//   visibility: visible;
+// }
+
+.header--navigation .c {
+  transform-origin: bottom;
 }
 
 .header--navigation .links {
@@ -71,6 +75,25 @@
   @include media("<=tablet") {
     font-size: 1.4rem;
   }
+}
+
+.header--navigation .c {
+  --scale: 1;
+  display: inline-block;
+  position: relative;
+}
+
+.header--navigation .c::before {
+  transform: scaleY(var(--scale));
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: $color-black;
+  z-index: 2;
+  transform-origin: bottom;
 }
 
 .header--navigation .link:last-child {
