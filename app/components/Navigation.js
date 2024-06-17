@@ -30,7 +30,7 @@ export default class Navigation extends Component {
 
       this.animateIn.from(this.elements.get("title"), {
         autoAlpha: 0,
-        // yPercent: 100,
+        yPercent: 100,
       });
 
       this.animateIn.call(() => {
@@ -49,7 +49,7 @@ export default class Navigation extends Component {
 
       this.animateOut.to(this.elements.get("title"), {
         autoAlpha: 0,
-        // yPercent: 100,
+        yPercent: 100,
       });
 
       this.animateOut.call(() => {
