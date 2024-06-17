@@ -8,7 +8,7 @@ if navigation
 					a(href="/en") IG
 					a(href="/en") EMAIL
 				li(class="link link--language")
-					a(href=Link(navigation.alternate_languages[0]))
+					a(href=Link(navigation.alternate_languages[0]) data-state="disabled")
 						span(class="wrap")
 							span=LangString(navigation.alternate_languages[0].lang)
 					

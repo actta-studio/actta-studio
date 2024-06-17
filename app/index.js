@@ -70,7 +70,13 @@ class App {
   }
 
   async onChange({ url, push = true }) {
-    if (url === window.location.href) return;
+    document
+      .querySelector(".link--language a")
+      .setAttribute("data-state", "disabled");
+
+    if (url === window.location.href) {
+      return;
+    }
 
     await this.page.hide();
 
@@ -94,9 +100,12 @@ class App {
     this.content.innerHTML = divContent.innerHTML;
 
     const newLanguageToggle = div.querySelector(".link--language");
+    const newLanguageToggleLink = div.querySelector(".link--language a");
     const newTitle = div.querySelector(".header--navigation .title");
     const currentLanguageToggle = document.querySelector(".link--language");
     const currentTitle = document.querySelector(".header--navigation .title");
+
+    newLanguageToggleLink.setAttribute("data-state", "disabled");
 
     if (currentLanguageToggle && newLanguageToggle) {
       this.toggle.hide();
@@ -148,9 +157,7 @@ class App {
     });
 
     const links = Array.from(allLinks).filter(
-      (link) =>
-        link.getAttribute("data-state") !== "disabled" &&
-        link.getAttribute("data-link") !== "external"
+      (link) => link.getAttribute("data-link") !== "external"
     );
 
     each(links, (link) => {

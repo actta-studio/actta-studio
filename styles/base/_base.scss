@@ -79,6 +79,11 @@ html.lenis body {
   height: auto;
 }
 
+[data-state="disabled"] {
+  cursor: not-allowed !important;
+  pointer-events: none;
+}
+
 .lenis.lenis-smooth {
   scroll-behavior: auto !important;
 }

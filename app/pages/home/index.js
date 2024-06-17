@@ -52,7 +52,61 @@ export default class Home extends Page {
             gsap.to(character, {
               "--scale": 0,
               ease: "steps(1)",
-              delay: index * delayIncrement, // Use the new delay increment
+              delay: index * delayIncrement,
+              onComplete: () => {
+                completedAnimations++;
+                if (completedAnimations === characters.length) {
+                  console.log(`Line animation completed.`);
+                  resolveLine();
+                }
+              },
+            });
+          });
+        });
+      });
+
+      Promise.all(animationPromises).then(() => {
+        console.log("All lines animation completed");
+        document
+          .querySelector(".link--language a")
+          .removeAttribute("data-state");
+        resolve();
+      });
+    });
+  }
+
+  hide() {
+    console.log("hide");
+    return new Promise((resolve) => {
+      const lines = Array.from(
+        document.querySelectorAll("[data-animation='type']")
+      );
+
+      if (lines.length === 0) {
+        resolve();
+        return;
+      }
+
+      const totalAnimationDuration = 1.25;
+
+      const animationPromises = lines.map((element) => {
+        return new Promise((resolveLine) => {
+          const characters = Array.from(
+            element.querySelectorAll(".c")
+          ).reverse(); // Reverse the characters array
+          let completedAnimations = 0;
+
+          const delayIncrement = totalAnimationDuration / characters.length;
+
+          gsap.set(characters, {
+            "--scale": 0,
+          });
+
+          characters.forEach((character, index) => {
+            gsap.to(character, {
+              "--scale": 1, // Change scale to 1 to hide
+              ease: "steps(1)",
+              delay: index * delayIncrement, // Use the same delay increment
               onComplete: () => {
                 completedAnimations++;
                 if (completedAnimations === characters.length) {
@@ -68,39 +122,6 @@ export default class Home extends Page {
       Promise.all(animationPromises).then(() => {
         console.log("All lines animation completed");
         resolve();
-      });
-    });
-  }
-
-  hide() {
-    return new Promise((resolve) => {
-      let animationsCompleted = 0;
-      const lines = Array.from(
-        document.querySelectorAll("[data-animation='type']")
-      );
-
-      if (lines.length === 0) {
-        resolve();
-        return;
-      }
-
-      lines.forEach((element) => {
-        const characters = Array.from(element.querySelectorAll(".c")).reverse(); // Reverse the array
-        animationsCompleted += characters.length;
-
-        characters.forEach((character, index) => {
-          gsap.to(character, {
-            "--scale": 1,
-            ease: "steps(1)",
-            delay: index * 0.025,
-            onComplete: () => {
-              animationsCompleted--;
-              if (animationsCompleted === 0) {
-                resolve();
-              }
-            },
-          });
-        });
       });
     });
   }
