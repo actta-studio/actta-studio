@@ -96,6 +96,18 @@
   transform-origin: bottom;
 }
 
+.header--navigation .link:first-child a {
+  font-size: 1.8rem;
+
+  @include media("<=tablet") {
+    font-size: 1.6rem;
+  }
+
+  @include media("<=phone") {
+    font-size: 1.4rem;
+  }
+}
+
 .header--navigation .link:last-child {
   flex: 1;
   width: 3rem;

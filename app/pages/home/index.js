@@ -24,7 +24,6 @@ export default class Home extends Page {
   }
 
   show() {
-    console.log("show");
     return new Promise((resolve) => {
       const lines = Array.from(
         document.querySelectorAll("[data-animation='type']")
@@ -35,42 +34,40 @@ export default class Home extends Page {
         return;
       }
 
-      const totalAnimationDuration = 1.5;
-
-      const animationPromises = lines.map((element) => {
-        return new Promise((resolveLine) => {
-          const characters = Array.from(element.querySelectorAll(".c"));
-          let completedAnimations = 0;
-
-          const delayIncrement = totalAnimationDuration / characters.length;
-
-          gsap.set(characters, {
-            "--scale": 1,
-          });
-
-          characters.forEach((character, index) => {
-            gsap.to(character, {
-              "--scale": 0,
-              ease: "steps(1)",
-              delay: index * delayIncrement,
-              onComplete: () => {
-                completedAnimations++;
-                if (completedAnimations === characters.length) {
-                  console.log(`Line animation completed.`);
-                  resolveLine();
-                }
-              },
-            });
-          });
-        });
+      const totalAnimationDuration = 0.7;
+      const masterTimeline = gsap.timeline({
+        onComplete: () => {
+          console.log("All lines animation completed");
+          document
+            .querySelector(".link--language a")
+            .removeAttribute("data-state");
+          resolve();
+        },
       });
 
-      Promise.all(animationPromises).then(() => {
-        console.log("All lines animation completed");
-        document
-          .querySelector(".link--language a")
-          .removeAttribute("data-state");
-        resolve();
+      lines.forEach((element, lineIndex) => {
+        const characters = Array.from(element.querySelectorAll(".c"));
+        const lineTimeline = gsap.timeline();
+        const delayIncrement = totalAnimationDuration / characters.length;
+
+        gsap.set(characters, {
+          "--scale": 1,
+        });
+
+        characters.forEach((character, index) => {
+          lineTimeline.to(
+            character,
+            {
+              "--scale": 0,
+              ease: "steps(1)",
+              duration: delayIncrement,
+            },
+            index * delayIncrement
+          );
+        });
+
+        // Add the line timeline to the master timeline, ensuring it starts after the previous one completes
+        masterTimeline.add(lineTimeline, lineIndex === 0 ? 0 : ">");
       });
     });
   }

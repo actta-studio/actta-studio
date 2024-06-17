@@ -37,14 +37,18 @@ export default class Navigation extends Component {
         },
       });
 
-      this.animateIn.to(".header--navigation .c", {
+      this.animateIn.set(".header--navigation .c", {
         "--scale": 0,
-        ease: "steps(1)",
-        stagger: {
-          each: 0.05 / 2,
-          from: "start",
-        },
       });
+
+      // this.animateIn.to(".header--navigation .c", {
+      //   "--scale": 0,
+      //   ease: "steps(1)",
+      //   stagger: {
+      //     each: 0.05 / 2,
+      //     from: "start",
+      //   },
+      // });
 
       this.animateIn.call(() => {
         resolve();
