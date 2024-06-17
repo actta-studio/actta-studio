@@ -29,6 +29,8 @@ export default class Home extends Page {
         document.querySelectorAll("[data-animation='type']")
       );
 
+      console.log("lines");
+
       if (lines.length === 0) {
         resolve();
         return;
@@ -129,6 +131,9 @@ export default class Home extends Page {
     this.addEventListeners();
 
     each(this.elements.get("lines"), (element) => {
+      // if element contains an svg dont split
+      if (element.querySelector("svg") !== null) return;
+
       splitC({
         element: element,
       });
