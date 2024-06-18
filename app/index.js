@@ -105,7 +105,7 @@ class App {
     const currentLanguageToggle = document.querySelector(".link--language");
     const currentTitle = document.querySelector(".header--navigation .title");
 
-    newLanguageToggleLink.setAttribute("data-state", "disabled");
+    // newLanguageToggleLink.setAttribute("data-state", "disabled");
 
     if (currentLanguageToggle && newLanguageToggle) {
       this.toggle.hide();

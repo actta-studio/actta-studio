@@ -35,13 +35,13 @@ export default class Home extends Page {
       }
 
       const masterTimeline = gsap.timeline({
-        onComplete: () => {
-          console.log("All lines animation completed");
-          document
-            .querySelector(".link--language a")
-            .removeAttribute("data-state");
-          resolve();
-        },
+        // onComplete: () => {
+        //   console.log("All lines animation completed");
+        //   document
+        //     .querySelector(".link--language a")
+        //     .removeAttribute("data-state");
+        //   resolve();
+        // },
       });
 
       lines.forEach((element, lineIndex) => {
@@ -79,53 +79,18 @@ export default class Home extends Page {
 
   hide() {
     return new Promise((resolve) => {
-      const lines = Array.from(
-        document.querySelectorAll("[data-animation='type']")
+      this.animateOut = gsap.timeline();
+
+      this.animateOut.to(
+        this.elements.get([".page--home .about", ".page--home .services"]),
+        {
+          autoAlpha: 0,
+          duration: 0.3,
+        }
       );
 
-      if (lines.length === 0) {
-        resolve();
-        return;
-      }
-
-      const animationPromises = lines.map((element) => {
-        return new Promise((resolveLine) => {
-          const characters = Array.from(
-            element.querySelectorAll(".c")
-          ).reverse();
-          let completedAnimations = 0;
-
-          const minDuration = 1.0;
-          const maxDuration = 1.3;
-          const totalAnimationDuration = Math.max(
-            minDuration,
-            Math.min(maxDuration, characters.length * 0.1)
-          );
-          const delayIncrement = totalAnimationDuration / characters.length;
-
-          gsap.set(characters, {
-            "--scale": 0,
-          });
-
-          characters.forEach((character, index) => {
-            gsap.to(character, {
-              "--scale": 1,
-              ease: "steps(1)",
-              delay: index * delayIncrement,
-              onComplete: () => {
-                completedAnimations++;
-                if (completedAnimations === characters.length) {
-                  console.log(`Line animation completed.`);
-                  resolveLine();
-                }
-              },
-            });
-          });
-        });
-      });
-
-      Promise.all(animationPromises).then(() => {
-        console.log("All lines animation completed");
+      this.animateOut.call(() => {
+        this.destroy();
         resolve();
       });
     });

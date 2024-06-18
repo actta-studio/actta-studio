@@ -8,7 +8,7 @@ if navigation
 					each item in navigation.data.contact_information
 						a(href=item.link.url target=item.link.target data-link="external")=item.label
 				li(class="link link--language")
-					a(href=Link(navigation.alternate_languages[0]) data-state="disabled")
+					a(href=Link(navigation.alternate_languages[0]))
 						span(class="wrap")
 							span=LangString(navigation.alternate_languages[0].lang)
 					
