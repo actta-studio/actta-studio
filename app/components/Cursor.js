@@ -13,6 +13,8 @@ export default class Cursor extends Component {
 
     if (this.hasHover) {
       this.addEventListeners();
+    } else {
+      this.hideCursor();
     }
   }
 
@@ -25,6 +27,12 @@ export default class Cursor extends Component {
   updateCursor() {
     if (!this.hasHover) return;
     this.element.style.transform = `translate3d(${this.clientX}px, ${this.clientY}px, 0)`;
+  }
+
+  hideCursor() {
+    if (this.element) {
+      this.element.style.display = "none";
+    }
   }
 
   addEventListeners() {
