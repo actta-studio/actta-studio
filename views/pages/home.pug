@@ -29,11 +29,11 @@ block content
 			ul
 				each service in document.data.services
 					li.service
-						span(class="line" data-animation='type' aria-label=service.service)
+						span(class="line" data-animation='type' aria-hidden='true')
 							span.c
 								svg(viewbox='0 0 23 29' fill='none' xmlns='http://www.w3.org/2000/svg')
 									path(d='M1 0V19.0953H21M21 19.0953L14.9286 10.1906M21 19.0953L14.9286 28' stroke='#F5F5F5' stroke-width='2')
-						span(data-animation='type' class="line")!=service.service
+						span(data-animation='type' class="line" aria-label=service.service)!=service.service
 
 
 
