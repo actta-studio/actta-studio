@@ -97,7 +97,7 @@
   // here
   font-size: 2rem;
   border: 0.15rem solid $color-white;
-  padding: 0.6rem;
+  padding: 0.6rem 0.8rem;
 
   display: flex;
   justify-content: center;
@@ -131,9 +131,12 @@
   transform-origin: bottom;
 }
 
+// .header--navigation .link:first-child a:first-child {
+//   background-color: red;
+// }
+
 .header--navigation .link:last-child {
   flex: 1;
-  // width: 3rem;
   aspect-ratio: 1/1;
   background-color: $color-green;
   color: $color-black;
@@ -144,7 +147,7 @@
   justify-content: center;
 
   @include media("<=phone") {
-    width: 3.25rem;
+    width: 3.5rem;
   }
 }
 

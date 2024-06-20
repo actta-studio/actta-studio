@@ -30,11 +30,11 @@
     flex-direction: column;
     gap: 4.4rem;
     min-height: calc(100dvh - 17.1rem);
-    margin-top: 17.1rem;
+    padding-top: 17.1rem;
   }
 
   @include media("<=phone") {
-    margin-top: 14.3rem;
+    padding-top: 14.3rem;
     min-height: calc(100dvh - 14.3rem);
   }
 }

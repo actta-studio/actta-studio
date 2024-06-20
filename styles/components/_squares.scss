@@ -1,39 +1,34 @@
 #logo {
   width: 64.7rem;
-  position: absolute;
-  top: 37.4rem;
-  left: 50%;
-  transform: translateX(-50%);
+  position: fixed;
   z-index: z("logo");
   will-change: transform;
   pointer-events: none;
 
   @include media("<=tablet") {
-    position: relative;
-    margin: 0 auto;
-    top: initial;
-    left: initial;
-    transform: initial;
+    width: 20rem;
+  }
 
-    width: 33.927rem;
+  @include media("<=phone") {
+    width: 19.8rem;
   }
 }
 
-.squares {
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100vw;
-  height: 100dvh;
+// .squares {
+//   position: fixed;
+//   top: 0;
+//   left: 0;
+//   width: 100vw;
+//   height: 100dvh;
 
-  display: grid;
-  grid-template-columns: repeat(12, 1fr);
-  overflow: hidden;
+//   display: grid;
+//   grid-template-columns: repeat(12, 1fr);
+//   overflow: hidden;
 
-  pointer-events: none;
+//   pointer-events: none;
 
-  z-index: z("logo");
-}
+//   z-index: z("logo");
+// }
 
 @media screen and (max-width: 768px) {
   .squares {

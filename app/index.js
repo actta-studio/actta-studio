@@ -18,9 +18,8 @@ class App {
 
     this.createNavigation();
     this.createPages();
-    this.createLogo();
     this.createLanguageToggle();
-
+    this.initLogoAnimation();
     this.createGrid();
 
     this.addLinkListeners();

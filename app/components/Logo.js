@@ -27,8 +27,6 @@ export default class Logo extends Component {
     }));
 
     this.scrollSpeed = 0.2;
-
-    console.log("Logo loaded");
   }
 
   loop() {
