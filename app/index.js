@@ -18,6 +18,7 @@ class App {
 
     this.createNavigation();
     this.createPages();
+    this.createLogo();
     this.createLanguageToggle();
 
     this.createGrid();
@@ -55,6 +56,10 @@ class App {
 
   createNavigation() {
     this.navigation = new Navigation();
+  }
+
+  createLogo() {
+    this.logo = new Logo();
   }
 
   createGrid() {
