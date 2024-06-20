@@ -21,7 +21,6 @@ class App {
     this.createLanguageToggle();
     this.initLogoAnimation();
     this.createGrid();
-
     this.addLinkListeners();
     this.addEventListeners();
   }
