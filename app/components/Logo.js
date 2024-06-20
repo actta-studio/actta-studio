@@ -5,7 +5,7 @@ export default class Logo extends Component {
     super({
       id: "logo",
       element: "#logo",
-      elements: { path: "#logo path" },
+      elements: { logoPath: "#logo path", cursorPath: "#cursor path" },
     });
 
     this.style = getComputedStyle(this.element);
@@ -23,15 +23,21 @@ export default class Logo extends Component {
 
     this.currentColorIndex = 0;
 
-    // this.changeColor();
-
     this.lastBounce = { x: null, y: null };
     this.scrollSpeed = 0.2;
   }
 
   changeColor() {
     this.currentColorIndex = (this.currentColorIndex + 1) % this.colors.length;
-    this.elements.get("path").style.fill = this.colors[this.currentColorIndex];
+    this.elements.get("logoPath").style.fill =
+      this.colors[this.currentColorIndex];
+
+    if (this.elements.get("cursorPath")) {
+      this.elements.get("cursorPath").style.fill =
+        this.colors[this.currentColorIndex];
+      this.elements.get("cursorPath").style.stroke =
+        this.colors[this.currentColorIndex];
+    }
   }
 
   loop() {

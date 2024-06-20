@@ -1,0 +1,15 @@
+#logo {
+  width: 64.7rem;
+  position: fixed;
+  z-index: z("logo");
+  will-change: transform;
+  pointer-events: none;
+
+  @include media("<=tablet") {
+    width: 20rem;
+  }
+
+  @include media("<=phone") {
+    width: 19.8rem;
+  }
+}

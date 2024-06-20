@@ -1,0 +1,9 @@
+#cursor {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 2.15rem;
+  z-index: z("cursor");
+  transform: translate(-50%, -50%);
+  pointer-events: none;
+}

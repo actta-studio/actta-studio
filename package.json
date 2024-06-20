@@ -39,12 +39,10 @@
   },
   "dependencies": {
     "@prismicio/client": "^7.5.0",
-    "@studio-freight/lenis": "^1.0.42",
     "html-entities": "^2.5.2",
     "i18n": "^0.15.1",
     "include-media": "^2.0.0",
     "node-fetch": "^3.3.2",
-    "p5": "^1.9.4",
     "serve-favicon": "^2.5.0",
     "ua-parser-js": "^1.0.38"
   }

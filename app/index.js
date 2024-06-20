@@ -5,12 +5,11 @@ import each from "lodash/each";
 import Home from "@/pages/home";
 import NotFound from "@/pages/notFound";
 
-import Preloader from "@/components/preloader";
 import Grid from "@/components/grid";
-import Squares from "@/components/squares";
 import Logo from "@/components/logo";
-import LanguageToggle from "./components/LanguageToggle";
-import Navigation from "./components/Navigation";
+import LanguageToggle from "@/components/LanguageToggle";
+import Navigation from "@/components/Navigation";
+import Cursor from "@/components/Cursor";
 
 class App {
   constructor() {
@@ -18,9 +17,13 @@ class App {
 
     this.createNavigation();
     this.createPages();
+
     this.createLanguageToggle();
+    this.createCursor();
+
     this.initLogoAnimation();
     this.createGrid();
+
     this.addLinkListeners();
     this.addEventListeners();
   }
@@ -43,29 +46,20 @@ class App {
     this.template = this.content.getAttribute("data-template");
   }
 
-  createPreloader() {
-    this.preloader = new Preloader();
-    this.preloader.once("completed", this.onPreloaded.bind(this));
-  }
-
   createLanguageToggle() {
     this.toggle = new LanguageToggle();
+  }
+
+  createCursor() {
+    this.cursor = new Cursor();
   }
 
   createNavigation() {
     this.navigation = new Navigation();
   }
 
-  createLogo() {
-    this.logo = new Logo();
-  }
-
   createGrid() {
     this.grid = new Grid();
-  }
-
-  createSquares() {
-    this.squares = new Squares();
   }
 
   initLogoAnimation() {
@@ -103,12 +97,9 @@ class App {
     this.content.innerHTML = divContent.innerHTML;
 
     const newLanguageToggle = div.querySelector(".link--language");
-    const newLanguageToggleLink = div.querySelector(".link--language a");
     const newTitle = div.querySelector(".header--navigation .title");
     const currentLanguageToggle = document.querySelector(".link--language");
     const currentTitle = document.querySelector(".header--navigation .title");
-
-    // newLanguageToggleLink.setAttribute("data-state", "disabled");
 
     if (currentLanguageToggle && newLanguageToggle) {
       this.toggle.hide();
