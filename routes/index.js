@@ -1,6 +1,5 @@
 const asyncHandler = require("../utils/async-handler");
 const { PrismicError } = require("@prismicio/client");
-const prismic = require("@prismicio/client");
 const { client } = require("../config/index");
 const { siteConfig } = require("../config/index");
 
@@ -23,8 +22,19 @@ const handleDefaultRequests = async (lang) => {
       return null;
     });
 
+  const meta = await client.getSingle("metadata", { lang }).catch((err) => {
+    if (
+      !(err instanceof PrismicError) ||
+      err.message !== "No documents were returned"
+    ) {
+      console.log(err);
+    }
+    return null;
+  });
+
   return {
     navigation,
+    meta,
   };
 };
 
