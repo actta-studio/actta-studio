@@ -93,21 +93,21 @@
   --scale: 1;
   display: inline-block;
   position: relative;
-  // visibility: hidden;
+  visibility: hidden;
 }
 
-.page--home .c::before {
-  transform: scaleY(var(--scale));
-  content: "";
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  background-color: $color-black;
-  z-index: 2;
-  transform-origin: bottom;
-}
+// .page--home .c::before {
+//   transform: scaleY(var(--scale));
+//   content: "";
+//   position: absolute;
+//   top: 0;
+//   left: 0;
+//   width: 100%;
+//   height: 100%;
+//   background-color: $color-black;
+//   z-index: 2;
+//   transform-origin: bottom;
+// }
 
 .page--home .line {
   overflow: hidden;

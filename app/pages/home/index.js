@@ -64,7 +64,7 @@ export default class Home extends Page {
           lineTimeline.to(
             character,
             {
-              "--scale": 0,
+              autoAlpha: 1,
               ease: "steps(1)",
               duration: delayIncrement,
             },
