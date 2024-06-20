@@ -5,14 +5,33 @@ export default class Logo extends Component {
     super({
       id: "logo",
       element: "#logo",
+      elements: { path: "#logo path" },
     });
 
     this.style = getComputedStyle(this.element);
     this.loop = this.loop.bind(this);
     this.loop();
 
+    this.colors = [
+      "#2CCE3E",
+      "#CE2CA1",
+      "#32D2E7",
+      "#FFF624",
+      "#FF3124",
+      "#8951FF",
+    ];
+
+    this.currentColorIndex = 0;
+
+    // this.changeColor();
+
     this.lastBounce = { x: null, y: null };
     this.scrollSpeed = 0.2;
+  }
+
+  changeColor() {
+    this.currentColorIndex = (this.currentColorIndex + 1) % this.colors.length;
+    this.elements.get("path").style.fill = this.colors[this.currentColorIndex];
   }
 
   loop() {
@@ -34,17 +53,20 @@ export default class Logo extends Component {
     this.element.style.transform = `translate(${x}px, ${y}px)`;
 
     const epsilon = 10;
+    const bounceThreshold = 100; // Time in milliseconds to wait before logging another bounce
 
     if (
-      Math.abs(x) <= epsilon ||
-      Math.abs(x - hRange) <= epsilon ||
-      Math.abs(y) <= epsilon ||
-      Math.abs(y - vRange) <= epsilon
+      (Math.abs(x) <= epsilon ||
+        Math.abs(x - hRange) <= epsilon ||
+        Math.abs(y) <= epsilon ||
+        Math.abs(y - vRange) <= epsilon) &&
+      (!this.lastBounce.time ||
+        performance.now() - this.lastBounce.time > bounceThreshold)
     ) {
-      if (this.lastBounce.x !== x || this.lastBounce.y !== y) {
-        this.lastBounce = { x, y };
-        this.emit("bounce", { x, y });
-      }
+      console.log("Bounce");
+      this.lastBounce = { x, y, time: performance.now() };
+
+      this.changeColor();
     }
 
     requestAnimationFrame(this.loop);
