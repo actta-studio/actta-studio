@@ -104,8 +104,6 @@ router.get(
         return null;
       });
 
-    console.log("homepage :=>", defaults.navigation.data.contact_information);
-
     if (!document) {
       res.status(404).render("pages/404", { lang, ...defaults });
     } else {

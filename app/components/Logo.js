@@ -69,7 +69,7 @@ export default class Logo extends Component {
       (!this.lastBounce.time ||
         performance.now() - this.lastBounce.time > bounceThreshold)
     ) {
-      console.log("Bounce");
+      ("Bounce");
       this.lastBounce = { x, y, time: performance.now() };
 
       this.changeColor();

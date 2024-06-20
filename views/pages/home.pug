@@ -7,7 +7,7 @@ block content
 	div(class="page page--home")
 		- var lines = document.data.about.split('\n')
 		div.about(class="about--" + document.lang)
-			p
+			p(aria-label=document.data.about)
 				each line in lines
 					if line === '&nbsp;'
 						span.wrapper
@@ -18,11 +18,9 @@ block content
 					else
 						span.wrapper
 							span(data-animation='type' class="line").text!=line
-					
-			
 
 		.services(class="services--" + document.lang)
-			h2.service-title
+			h2.service-title(aria-label="services")
 				span(data-animation='type' class="line")
 					if document.lang === 'en-ca'
 						| Our services
@@ -31,14 +29,11 @@ block content
 			ul
 				each service in document.data.services
 					li.service
-						span(class="line" data-animation='type')
+						span(class="line" data-animation='type' aria-label=service.service)
 							span.c
 								svg(viewbox='0 0 23 29' fill='none' xmlns='http://www.w3.org/2000/svg')
 									path(d='M1 0V19.0953H21M21 19.0953L14.9286 10.1906M21 19.0953L14.9286 28' stroke='#F5F5F5' stroke-width='2')
 						span(data-animation='type' class="line")!=service.service
-
-		//- .logo()
-		//- 	img(id="logo" src="/images/logo.svg", alt="ACTTA Studio")
 
 
 
